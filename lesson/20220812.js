@@ -30,32 +30,33 @@ each element of array A is an integer within the range [1..(N + 1)].
 
 function solution(A, K) {
     // write your code in JavaScript (Node.js 8.9.4)
-    function solution(A) {
-        // write your code in JavaScript (Node.js 8.9.4)
-        if(A.length == 0) {
+    if(A.length == 0) {
+        return 1;
+    }
+
+    if(A.length == 1) {
+        if(A[0] == 1) {
+            return 2;
+        } else {
             return 1;
         }
+    }
 
-        if(A.length == 1) {
-            if(A[0] == 1) {
-                return 2;
-            } else {
-                return 1;
-            }
+    A = A.sort((a,b) => {
+        return a-b
+    });
+
+    let result
+    for(let i =0 ;i<A.length; i++) {
+        let target = i+1;
+        result = target^A[i]
+        // console.log('i + 1 = '+ target + '========A =' +A[i] + '=====' + result)
+        if(result) {
+            return i+1;
         }
-
-        A = A.sort((a,b) => {
-            return a-b
-        });
-
-        for(let i =1 ;i<A.length; i++) {
-            let target = i+1;
-            let result = target^A[i]
-            // console.log('i + 1 = '+ target + '========A =' +A[i] + '=====' + result)
-            if(result) {
-                return A[i]-1;
-            }
-        }
+    }
+    if(result == 0) {
+        return A.length+1;
     }
     
 }
