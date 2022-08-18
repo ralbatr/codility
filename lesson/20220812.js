@@ -28,7 +28,7 @@ each element of array A is an integer within the range [1..(N + 1)].
 // you can write to stdout for debugging purposes, e.g.
 // console.log('this is a debug message');
 
-function solution(A, K) {
+function solution(A) {
     // write your code in JavaScript (Node.js 8.9.4)
     if(A.length == 0) {
         return 1;
@@ -59,4 +59,87 @@ function solution(A, K) {
         return A.length+1;
     }
     
+}
+// 二分法 解决
+function solutionB(A, K) {
+    // write your code in JavaScript (Node.js 8.9.4)
+    if(A.length == 0) {
+        return 1;
+    }
+
+    if(A.length == 1) {
+        if(A[0] == 1) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    if(A.length == 2) {
+        if(!A.includes(1)) {
+            return 1;
+        }
+
+        if(!A.includes(2)) {
+            return 2;
+        }
+
+        if(!A.includes(3)) {
+            return 3;
+        }
+    }
+
+    // 排序
+    A = A.sort((a,b) => {
+        return a-b
+    });
+
+
+    if(A[0] != 1) {
+        return 1;
+    }
+
+    if(A[A.length -1 ] != A.length+1) {
+        return A.length+1
+    }
+
+    let low = 0;
+    let high = A.length;
+    let over = false
+    let result ;
+    // debugger
+    while (!over) {
+        // debugger
+        // 向下取整
+        let mid = Math.floor((low + high)/2)
+
+
+        if( high-mid == 1) {
+            if((A[mid]^(mid+1)) != 0) {
+                result = mid+1;
+            } else {
+                result = mid+2;
+            }
+            over = true;
+            return result;    
+        }
+
+        if( mid - low == 1) {
+            if((A[mid]^(mid+1)) != 0) {
+                result = mid+1;
+            } else {
+                result = mid+2;
+            }
+            over = true; 
+            return result;  
+        }
+
+        if(A[mid] ^ (mid+1)) { // 不等于0 
+            high = mid;
+        }  else { // 等于 0 ，左侧正常 
+            low = mid;
+        }
+    }
+
+    return result
 }
